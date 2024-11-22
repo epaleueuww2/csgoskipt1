@@ -1,4 +1,4 @@
-wait(3)
+wait(2)
 local MenuPanel = game.CoreGui:FindFirstChild("Fernando")
 local playerCount = #game.Players:GetPlayers()
 
@@ -511,6 +511,20 @@ local contractSize = UDim2.new(0, 410, 0, 0)
 
 local expandTween = TweenService:Create(MenuPanel, expandTweenInfo, {Size = expandSize})
 local contractTween = TweenService:Create(MenuPanel, contractTweenInfo, {Size = contractSize})
+
+local function SaveMenuState(isExpanded)
+    local success, err = pcall(function()
+        local stateInfo = {
+            IsExpanded = isExpanded,
+            LastModified = os.time()
+        }
+        writefile("MenuState.json", HttpService:JSONEncode(stateInfo))
+    end)
+
+    if not success then
+        warn("Error al guardar el estado del menú: " .. tostring(err))
+    end
+end
 
 local function SaveMenuState(isExpanded)
     local success, err = pcall(function()
