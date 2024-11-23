@@ -703,8 +703,7 @@ local missions = {
     { name = "Klirin", bossName = "Klirin", requiredValue = 0, endRange = 20000 },
     { name = "Kid Nohag", bossName = "Kid Nohag", requiredValue = 20000, endRange = 100001 },
     { name = "Radish", bossName = "Radish", requiredValue = 100001, endRange = 200000 },
-    { name = "Mapa", bossName = "Mapa", requiredValue = 200001, endRange = 400000 },
-    { name = "Top X Fighter", bossName = "X Fighter Master", requiredValue = 400001, endRange = 750001 },
+    { name = "Mapa", bossName = "Mapa", requiredValue = 200001, endRange = 750000 },
     { name = "Super Vegetable", bossName = "Super Vegetable", requiredValue = 750001, endRange = 1200000 },
     { name = "Perfect Atom", bossName = "Perfect Atom", requiredValue = 3500000, endRange = 5000000 },
     { name = "SSJ2 Wukong", bossName = "SSJ2 Wukong", requiredValue = 5000001, endRange = 8000000 },
@@ -1371,6 +1370,7 @@ pcall(function()
                                           
                                             function() 
                                                 game.ReplicatedStorage.Package.Events.voleys:InvokeServer("Energy Volley", {FaceMouse = false, MouseHit = CFrame.new()}, "Blacknwhite27")
+                                                game:GetService("ReplicatedStorage").Package.Events.reb:InvokeServer()
                                             end
                                         }
 
