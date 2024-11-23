@@ -1,4 +1,4 @@
-wait(2)
+wait(3)
 local MenuPanel = game.CoreGui:FindFirstChild("Fernando")
 local playerCount = #game.Players:GetPlayers()
 
@@ -153,7 +153,7 @@ formsButton.Name = "FormsButton"
 formsButton.Parent = MenuPanel
 formsButton.Size = UDim2.new(1/3, -10, 0, 30)
 formsButton.Position = UDim2.new(1/3, 5, 0, 5)
-formsButton.Text = "Fer"
+formsButton.Text = "Free Script"
 formsButton.Font = Enum.Font.SourceSans
 formsButton.TextSize = 18
 formsButton.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -699,6 +699,27 @@ local isLoop7Active = safeLoadSwitchState("Switch7")
 local data = game.ReplicatedStorage.Datas[player.UserId]
 local events = game:GetService("ReplicatedStorage").Package.Events
 
+
+local lplr = game.Players.LocalPlayer
+local ldata = game.ReplicatedStorage:WaitForChild("Datas"):WaitForChild(lplr.UserId)
+if lplr.PlayerGui:FindFirstChild("Start") then
+    game:GetService("ReplicatedStorage").Package.Events.Start:InvokeServer()
+    if workspace.Others:FindFirstChild("Title") then
+        workspace.Others.Title:Destroy();
+    end;
+    local cam = game.Workspace.CurrentCamera;
+    cam.CameraType = Enum.CameraType.Custom;
+    cam.CameraSubject = lplr.Character.Humanoid;
+    _G.Ready = true
+    game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true);
+    lplr.PlayerGui:WaitForChild("Main").Enabled = true
+    if lplr.PlayerGui:FindFirstChild("Start") then
+        lplr.PlayerGui.Start:Destroy()
+    end
+    lplr.PlayerGui.Main.bruh.Enabled = false
+    lplr.PlayerGui.Main.bruh.Enabled = true
+end
+
 local missions = {
     { name = "Klirin", bossName = "Klirin", requiredValue = 0, endRange = 20000 },
     { name = "Kid Nohag", bossName = "Kid Nohag", requiredValue = 20000, endRange = 100001 },
@@ -792,6 +813,34 @@ end)
 
 task.spawn(function()
     while true do
+
+
+        task.spawn(function()
+            local player = game.Players.LocalPlayer
+            local pd = game:GetService("ReplicatedStorage").Datas[player.UserId]
+        
+            local lastQuestValue = pd.Quest.Value
+            local timeWithoutChange = 0
+            local resetThreshold = 120 -- 2 minutos en segundos
+        
+            while true do
+                task.wait(1) -- Comprobación cada segundo
+        
+                if pd.Quest.Value == "" then
+                    timeWithoutChange = timeWithoutChange + 1
+                else
+                    timeWithoutChange = 0
+                    lastQuestValue = pd.Quest.Value
+                end
+        
+                if timeWithoutChange >= resetThreshold then
+                    -- Resetear personaje
+                    player.Character.Humanoid.Health = 0
+                    timeWithoutChange = 0 -- Reiniciar contador después del reset
+                end
+            end
+        end)
+        
         task.wait(1)
         local success, fallo = pcall(function()
             if data.Strength.Value < 200000000 and game.PlaceId ~= 3311165597 and isLoop1Active then
@@ -849,7 +898,7 @@ task.spawn(function()
         local ldata = game.ReplicatedStorage:WaitForChild("Datas"):WaitForChild(tostring(game.Players.LocalPlayer.UserId))
 
         if ldata.Quest.Value ~= "" then
-        game.ReplicatedStorage.Package.Events.cha:InvokeServer("Blacknwhite27")
+          game.ReplicatedStorage.Package.Events.cha:InvokeServer("Blacknwhite27")
             game:GetService("ReplicatedStorage").Package.Events.p:FireServer("Blacknwhite27", 1)
             game:GetService("ReplicatedStorage").Package.Events.p:FireServer("Blacknwhite27", 2)           
         end
