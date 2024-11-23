@@ -2,30 +2,7 @@ wait(3)
 local MenuPanel = game.CoreGui:FindFirstChild("Fernando")
 local playerCount = #game.Players:GetPlayers()
 
-pcall(function()
-    if MenuPanel then
-        return  
-    end
 
-    if playerCount > 3 then
-        pcall(function()
-            if MenuPanel then
-                MenuPanel:Destroy()
-            end
-        end)
-        wait(0.5)
-        pcall(function()
-            game:Shutdown()
-        end)
-        return  
-    end
-
-    if playerCount > 1 then
-        pcall(function()
-            game.ReplicatedStorage.Package.Events.TP:InvokeServer("Earth")
-        end)
-    end
-end)
 
 
 local success, fail = pcall(function()
