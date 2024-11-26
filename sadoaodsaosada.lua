@@ -1671,31 +1671,18 @@ end)
 
 
 task.spawn(function()
-
     while true do
-
         task.wait(1)
-
         if isLoop5Active then
-
             local success, fallo = pcall(function()
-
                 game:GetService("ReplicatedStorage").Package.Events.reb:InvokeServer()
-
             end)
 
-
-
             if not success then
-
                 warn("Error al invocar el evento rebirth: " .. fallo)
-
             end
-
         end
-
     end
-
 end)
 
 
